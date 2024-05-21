@@ -6,6 +6,8 @@ import { initMongoConnection } from './db/initMongoConnection.js';
 
 import { env } from './utils/env.js';
 
+import { getAllContacts, getContactById } from './services/contacts.js';
+
 dotenv.config();
 
 const PORT = Number(env('PORT', '3000'));
@@ -25,9 +27,22 @@ export const setupServer = async () => {
     }),
   );
 
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Hello world!',
+  app.get('/contacts', async (req, res) => {
+    const contacts = await getAllContacts();
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully found contacts!',
+      data: contacts,
+    });
+  });
+
+  app.get('/contacts/:contactId', async (req, res) => {
+    const { contactId } = req.params;
+    const contact = await getContactById(contactId);
+    res.status(200).json({
+      status: 200,
+      message: `Successfully found contact with id ${contactId}!`,
+      data: contact,
     });
   });
 
