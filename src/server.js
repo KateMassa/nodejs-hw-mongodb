@@ -2,7 +2,6 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { initMongoConnection } from './db/initMongoConnection.js';
 
 import { env } from './utils/env.js';
 
@@ -12,8 +11,7 @@ dotenv.config();
 
 const PORT = Number(env('PORT', '3000'));
 
-export const setupServer = async () => {
-  await initMongoConnection();
+export const setupServer = () => {
   const app = express();
 
   app.use(express.json());
