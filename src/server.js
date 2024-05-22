@@ -1,13 +1,10 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-import dotenv from 'dotenv';
 
 import { env } from './utils/env.js';
 
 import { getAllContacts, getContactById } from './services/contacts.js';
-
-dotenv.config();
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -47,13 +44,6 @@ export const setupServer = () => {
   app.use('*', (req, res) => {
     res.status(404).json({
       message: 'Not found',
-    });
-  });
-
-  app.use((err, req, res) => {
-    res.status(500).json({
-      message: 'Something went wrong',
-      error: err.message,
     });
   });
 
