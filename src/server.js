@@ -3,8 +3,8 @@ import pino from 'pino-http';
 import cors from 'cors';
 
 import contactsRouter from './routers/contacts.js';
-import { errorHandler } from './utils/errorHandler.js';
-import { notFoundHandler } from './middlewares/notFoundHandler';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 import { env } from './utils/env.js';
 
