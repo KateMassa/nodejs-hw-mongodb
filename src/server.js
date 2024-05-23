@@ -34,12 +34,12 @@ export const setupServer = () => {
   app.get('/contacts/:contactId', async (req, res) => {
     const { contactId } = req.params;
 
-    if (!/^\d+$/.test(contactId)) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Invalid contact ID',
-      });
-    }
+    // if (!/^\d+$/.test(contactId)) {
+    //   return res.status(400).json({
+    //     status: 400,
+    //     message: 'Invalid contact ID',
+    //   });
+    // }
 
     try {
       const contact = await getContactById(contactId);
