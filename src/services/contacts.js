@@ -10,20 +10,20 @@ export const getContactById = async (contactId) => {
   return contact;
 };
 
-export const createContact = async (contact) => {
-  const newContact = await ContactsCollection.create(contact);
-  return newContact;
+export const createContact = async (payload) => {
+  const contact = await ContactsCollection.create(payload);
+  return contact;
 };
 
 export const deleteContact = async (contactId) => {
-  const deletedContact = await ContactsCollection.findOneAndDelete({
+  const contact = await ContactsCollection.findOneAndDelete({
     _id: contactId,
   });
-  return deletedContact;
+  return contact;
 };
 
 export const updateContact = async (contactId, contact, options = {}) => {
-  const updatedContact = await ContactsCollection.findOneAndUpdate(
+  const rawResult = await ContactsCollection.findOneAndUpdate(
     { _id: contactId },
     contact,
     {
@@ -32,11 +32,11 @@ export const updateContact = async (contactId, contact, options = {}) => {
       ...options,
     },
   );
-  if (!updatedContact || !updatedContact.value) {
+  if (!rawResult || !rawResult.value) {
     return null;
   }
   return {
-    contact: updatedContact,
-    isNew: Boolean(updatedContact?.lastErrorObject?.upserted),
+    contact: rawResult,
+    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
