@@ -22,10 +22,10 @@ export const deleteContact = async (contactId) => {
   return contact;
 };
 
-export const updateContact = async (contactId, contact, options = {}) => {
+export const updateContact = async (contactId, payload, options = {}) => {
   const rawResult = await ContactsCollection.findOneAndUpdate(
     { _id: contactId },
-    contact,
+    payload,
     {
       new: true,
       includeResultMetadata: true,
