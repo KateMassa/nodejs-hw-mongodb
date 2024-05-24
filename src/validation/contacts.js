@@ -17,13 +17,11 @@ export const createContactSchema = Joi.object({
 });
 
 export const updateContactSchema = Joi.object({
-  name: Joi.string().min(3).max(20).optional(),
-  phoneNumber: Joi.string().min(3).max(20).optional(),
-  email: Joi.string().email().min(3).max(20).optional(),
-  isFavorite: Joi.boolean().optional(),
-  contactType: Joi.string().valid('work', 'personal', 'home').optional(),
-  createdAt: Joi.date().optional(),
-  updatedAt: Joi.date().optional(),
+  name: Joi.string().min(3).max(20),
+  phoneNumber: Joi.string().min(3).max(20),
+  email: Joi.string().email().min(3).max(20),
+  isFavorite: Joi.boolean(),
+  contactType: Joi.string().valid('work', 'personal', 'home'),
 });
 
 // export const validationResult = createContactSchema.validate(userData, {
