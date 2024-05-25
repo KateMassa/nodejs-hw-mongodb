@@ -18,10 +18,10 @@ export const getAllContactsController = async (req, res) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
-  // if (!/^\d+$/.test(contactId)) {
-  //   next(createHttpError(400, 'Invalid contact ID'));
-  //   return;
-  // }
+  if (!/^\d+$/.test(contactId)) {
+    next(createHttpError(400, 'Invalid contact ID'));
+    return;
+  }
   const contact = await getContactById(contactId);
   if (!contact) {
     next(createHttpError(404, 'Contact not found'));
