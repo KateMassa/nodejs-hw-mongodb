@@ -3,6 +3,7 @@ import pino from 'pino-http';
 import cors from 'cors';
 
 import contactsRouter from './routers/contacts.js';
+
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
@@ -23,12 +24,6 @@ export const setupServer = () => {
       },
     }),
   );
-
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Hello World!',
-    });
-  });
 
   app.use(contactsRouter);
 
