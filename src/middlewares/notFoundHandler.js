@@ -1,8 +1,5 @@
 import { HttpError } from 'http-errors';
-export const notFoundHandler = (err, req, res, next) => {
-  if (next === 'fake') {
-    next();
-  }
+export const notFoundHandler = (err, req, res) => {
   if (err instanceof HttpError) {
     res.status(err.status).json({
       status: err.status,
@@ -13,6 +10,8 @@ export const notFoundHandler = (err, req, res, next) => {
   }
 
   res.status(404).json({
-    message: 'Route not found',
+    status: 404,
+    message: 'Contact not found',
+    data: err.message,
   });
 };
