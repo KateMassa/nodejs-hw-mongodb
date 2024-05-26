@@ -61,8 +61,11 @@ export const upsertContactController = async (req, res, next) => {
     next(createHttpError(404, 'Contact not found'));
     return;
   }
-  res.status(200).json({
-    status: 200,
+
+  const status = result.isNew ? 201 : 200;
+
+  res.status(status).json({
+    status,
     message: `Successfully upserted contact with id ${contactId}!`,
     data: result.contact,
   });
