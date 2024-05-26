@@ -18,16 +18,13 @@ export const getAllContactsController = async (req, res) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
-  // if (!/^\d+$/.test(contactId)) {
-  //   next(createHttpError(400, 'Invalid contact ID'));
-  //   return;
-  // }
+
   const contact = await getContactById(contactId);
   if (!contact) {
     next(createHttpError(404, 'Contact not found'));
     return;
   }
-  res.status(200).json({
+  res.json({
     status: 200,
     message: `Successfully found contact with id ${contactId}!`,
     data: contact,
@@ -54,7 +51,7 @@ export const deleteContactController = async (req, res, next) => {
   res.status(204).send();
 };
 
-export const updateContactController = async (req, res, next) => {
+export const upsertContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
   const result = await updateContact(contactId, req.body, {
