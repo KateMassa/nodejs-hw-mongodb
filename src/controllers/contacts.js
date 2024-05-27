@@ -16,12 +16,12 @@ export const getAllContactsController = async (req, res) => {
   });
 };
 
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
-  // if (!/^\d+$/.test(contactId)) {
-  //   next(createHttpError(400, 'Invalid contact ID'));
-  //   return;
-  // }
+
   const contact = await getContactById(contactId);
   if (!contact) {
     next(createHttpError(404, 'Contact not found'));
@@ -82,5 +82,24 @@ export const patchContactController = async (req, res, next) => {
     status: 200,
     message: `Successfully patched contact with id ${contactId}!`,
     data: result.contact,
+  });
+};
+
+export const getContactsController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+
+  const contacts = await getAllContacts({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+  });
+
+  res.json({
+    status: 200,
+    message: 'Successfully found contacts!',
+    data: contacts,
   });
 };
