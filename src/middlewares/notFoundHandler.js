@@ -1,4 +1,4 @@
-import HttpError from '../utils/HttpError.js';
+import { HttpError } from '../utils/HttpError.js';
 export const notFoundHandler = (err, req, res) => {
   if (err instanceof HttpError) {
     res.status(err.status).json({
