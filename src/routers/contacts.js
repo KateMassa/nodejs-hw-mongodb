@@ -31,7 +31,11 @@ router.post(
 
 router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
 
-router.put('/contacts/:contactId', ctrlWrapper(updateContactController));
+router.put(
+  '/contacts/:contactId',
+  validateBody(updateContactSchema),
+  ctrlWrapper(updateContactController),
+);
 
 router.patch(
   '/contacts/:contactId',
