@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import {
-  getAllContactsController,
+  getContactsController,
   getContactByIdController,
   createContactController,
   deleteContactController,
@@ -19,7 +19,7 @@ import { validateBody } from '../middlewares/validateBody.js';
 
 const router = Router();
 
-router.get('/contacts', ctrlWrapper(getAllContactsController));
+router.get('/contacts', ctrlWrapper(getContactsController));
 
 router.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
 
