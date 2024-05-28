@@ -15,11 +15,11 @@ export const getAllContacts = async ({
 
   const contactsQuery = ContactsCollection.find();
 
-  if (filter) {
+  if (filter.contactType) {
     contactsQuery.where('contactType').equals(filter.contactType);
   }
 
-  if (filter) {
+  if (filter.isFavorite) {
     contactsQuery.where('isFavorite').equals(filter.isFavorite);
   }
 
