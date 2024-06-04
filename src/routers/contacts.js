@@ -27,7 +27,7 @@ router.get('/', ctrlWrapper(getContactsController));
 router.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
 
 router.post(
-  '',
+  '/contacts',
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );

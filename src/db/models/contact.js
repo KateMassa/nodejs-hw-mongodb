@@ -33,6 +33,11 @@ const Contact = new Schema({
     type: Date,
     default: Date.now,
   },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
 export const ContactsCollection = model('contacts', Contact);
