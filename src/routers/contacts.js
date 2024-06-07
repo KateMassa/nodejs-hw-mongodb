@@ -20,28 +20,39 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 
-router.use(authenticate);
+// router.use(authenticate);
 
-router.get('/', ctrlWrapper(getContactsController));
+router.get('/contacts', authenticate, ctrlWrapper(getContactsController));
 
-router.get('/:contactId', ctrlWrapper(getContactByIdController));
+router.get(
+  '/contacts/:contactId',
+  authenticate,
+  ctrlWrapper(getContactByIdController),
+);
 
 router.post(
-  '/',
+  '/contacts',
+  authenticate,
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
 
-router.delete('/:contactId', ctrlWrapper(deleteContactController));
+router.delete(
+  '/contacts/:contactId',
+  authenticate,
+  ctrlWrapper(deleteContactController),
+);
 
 router.put(
-  '/:contactId',
+  '/contacts/:contactId',
+  authenticate,
   validateBody(updateContactSchema),
   ctrlWrapper(updateContactController),
 );
 
 router.patch(
-  '/:contactId',
+  '/contacts/:contactId',
+  authenticate,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
