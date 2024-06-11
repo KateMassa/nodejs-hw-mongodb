@@ -6,6 +6,7 @@ import {
 } from '../services/auth.js';
 
 import { THIRTY_DAYS } from '../constants/index.js';
+import createHttpError from 'http-errors';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -41,14 +42,36 @@ export const loginUserController = async (req, res) => {
   });
 };
 
+// export const refreshUserSessionController = async (req, res) => {
+//   const session = await refreshUsersSession({
+//     sessionId: req.cookies.sessionId,
+//     refreshToken: req.cookies.refreshToken,
+//   });
+//   setupSession(res, session);
+
+//   res.status(200).json({
+//     status: 200,
+//     message: 'Successfully refreshed a session!',
+//     data: {
+//       accessToken: session.accessToken,
+//     },
+//   });
+// };
+
 export const refreshUserSessionController = async (req, res) => {
+  const { sessionId, refreshToken } = req.cookies;
+  if (!sessionId || !refreshToken) {
+    throw createHttpError(401, 'Session or refresh token is missing');
+  }
+
   const session = await refreshUsersSession({
-    sessionId: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
+    sessionId,
+    refreshToken,
   });
+
   setupSession(res, session);
 
-  res.status(200).json({
+  res.json({
     status: 200,
     message: 'Successfully refreshed a session!',
     data: {
@@ -58,9 +81,15 @@ export const refreshUserSessionController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res) => {
-  if (req.cookies.sessionId) {
-    await logoutUser(req.cookies.sessionId);
+  // if (req.cookies.sessionId) {
+  //   await logoutUser(req.cookies.sessionId);
+  // }
+  const { sessionId } = req.cookies;
+  if (!sessionId) {
+    throw createHttpError(401, 'Session ID is missing');
   }
+
+  await logoutUser(sessionId);
 
   res.clearCookie('refreshToken');
   res.clearCookie('sessionId');
