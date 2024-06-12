@@ -59,7 +59,7 @@ export const getContactByIdController = async (req, res, next) => {
     next(createHttpError(404, 'Contact not found'));
     return;
   }
-  res.status(200).json({
+  res.json({
     status: 200,
     message: `Successfully found contact with id ${authContactId._id}!`,
     data: contact,
