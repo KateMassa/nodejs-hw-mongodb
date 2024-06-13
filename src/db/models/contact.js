@@ -33,6 +33,9 @@ const Contact = new Schema({
     type: Date,
     default: Date.now,
   },
+
+  versionKey: false,
+
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'users',
