@@ -1,3 +1,4 @@
+import { version } from 'joi';
 import { model, Schema } from 'mongoose';
 
 const Contact = new Schema({
@@ -24,7 +25,6 @@ const Contact = new Schema({
     type: String,
     enum: ['work', 'personal', 'home'],
     default: 'personal',
-    versionKey: false,
   },
   createdAt: {
     type: Date,
