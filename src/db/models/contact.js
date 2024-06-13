@@ -24,6 +24,7 @@ const Contact = new Schema({
     type: String,
     enum: ['work', 'personal', 'home'],
     default: 'personal',
+    versionKey: false,
   },
   createdAt: {
     type: Date,
@@ -33,8 +34,6 @@ const Contact = new Schema({
     type: Date,
     default: Date.now,
   },
-
-  versionKey: false,
 
   userId: {
     type: Schema.Types.ObjectId,
