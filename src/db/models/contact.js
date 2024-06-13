@@ -1,4 +1,3 @@
-import { version } from 'joi';
 import { model, Schema } from 'mongoose';
 
 const Contact = new Schema({
