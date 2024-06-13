@@ -16,9 +16,8 @@ export const getContactsController = async (req, res) => {
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
 
-  const userId = req.user._id;
   const contacts = await getAllContacts({
-    userId,
+    userId: req.user._id,
     page,
     perPage,
     sortBy,
@@ -42,29 +41,25 @@ const setAuthContactId = (req) => {
   if (userId) {
     authContactId = { ...authContactId, userId: userId };
   }
-
   return authContactId;
 };
 
 export const getContactByIdController = async (req, res, next) => {
   const authContactId = setAuthContactId(req);
-  const { contactId } = req.params;
   const contact = await getContactById(authContactId);
-
   if (!contact) {
     next(createHttpError(404, 'Contact not found'));
     return;
   }
   res.status(200).json({
     status: 200,
-    message: `Successfully found contact with id ${contactId}!`,
+    message: `Successfully found contact with id ${authContactId}!`,
     data: contact,
   });
 };
 
 export const createContactController = async (req, res) => {
   const contact = await createContact({ userId: req.user._id, ...req.body });
-
   res.status(201).json({
     status: 201,
     message: 'Successfully created contact!',
@@ -84,7 +79,6 @@ export const deleteContactController = async (req, res, next) => {
 };
 
 export const updateContactController = async (req, res, next) => {
-  const { contactId } = req.params;
   const authContactId = setAuthContactId(req);
 
   const result = await updateContact(authContactId, req.body, {
@@ -96,23 +90,21 @@ export const updateContactController = async (req, res, next) => {
   }
   res.status(200).json({
     status: 200,
-    message: `Successfully upserted contact with id ${contactId}!`,
+    message: `Successfully upserted contact with id ${authContactId}!`,
     data: result.contact,
   });
 };
 
 export const patchContactController = async (req, res, next) => {
-  const { contactId } = req.params;
   const authContactId = setAuthContactId(req);
-
   const result = await updateContact(authContactId, req.body);
   if (!result) {
     next(createHttpError(404, 'Contact not found'));
     return;
   }
-  res.json({
+  res.status(200).json({
     status: 200,
-    message: `Successfully patched contact with id ${contactId}!`,
+    message: `Successfully patched contact with id ${authContactId}!`,
     data: result.contact,
   });
 };
