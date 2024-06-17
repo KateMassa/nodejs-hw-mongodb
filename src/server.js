@@ -9,6 +9,7 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { env } from './utils/env.js';
 
 import cookieParser from 'cookie-parser';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -18,6 +19,7 @@ export const setupServer = () => {
   app.use(express.json());
   app.use(cors());
   app.use(cookieParser());
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
   app.use(
     pino({
