@@ -4,14 +4,14 @@ import { validateBody } from '../middlewares/validateBody.js';
 import {
   registerUserSchema,
   loginUserSchema,
-  requestResetEmailSchema,
+  sendResetEmailSchema,
 } from '../validation/auth.js';
 import {
   registerUserController,
   loginUserController,
   logoutUserController,
   refreshUserSessionController,
-  requestResetEmailController,
+  sendResetEmailController,
 } from '../controllers/auth.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
@@ -41,9 +41,9 @@ router.post(
 router.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 
 router.post(
-  '/request-reset-email',
-  validateBody(requestResetEmailSchema),
-  ctrlWrapper(requestResetEmailController),
+  '/send-reset-email',
+  validateBody(sendResetEmailSchema),
+  ctrlWrapper(sendResetEmailController),
 );
 
 router.post(
