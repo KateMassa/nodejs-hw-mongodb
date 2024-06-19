@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { SMTP } from '../constants/index.js';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
 import handlebars from 'handlebars';
@@ -15,6 +14,7 @@ import {
   FIFTEEN_MINUTES,
   THIRTY_DAYS,
   TEMPLATES_DIR,
+  SMTP,
 } from '../constants/index.js';
 import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
@@ -128,12 +128,23 @@ export const requestResetToken = async (email) => {
     link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
   });
 
-  await sendEmail({
-    from: env(SMTP.SMTP_FROM),
-    to: email,
-    subject: 'Reset your password',
-    html,
-  });
+  try {
+    await sendEmail({
+      from: env(SMTP.SMTP_FROM),
+      to: email,
+      subject: 'Reset your password',
+      html,
+    });
+  } catch (err) {
+    throw createHttpError(
+      500,
+      'Failed to send email, please try again later.',
+      {
+        detail: err.message,
+        cause: err,
+      },
+    );
+  }
 };
 
 export const resetPassword = async (payload) => {
