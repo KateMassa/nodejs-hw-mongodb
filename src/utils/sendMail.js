@@ -15,3 +15,19 @@ const transporter = nodemailer.createTransport({
 export const sendEmail = async (options) => {
   return await transporter.sendMail(options);
 };
+
+const testEmail = async () => {
+  try {
+    const info = await sendEmail({
+      from: env('SMTP_FROM'),
+      to: 'recipient@example.com',
+      subject: 'Test Email',
+      text: 'This is a test email sent using Brevo.',
+      html: '<p>This is a test email sent using <strong>Brevo</strong>.</p>',
+    });
+    console.log('Test email sent successfully:', info);
+  } catch (error) {
+    console.error('Error sending test email:', error);
+  }
+};
+testEmail();
