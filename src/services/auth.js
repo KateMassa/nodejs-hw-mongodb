@@ -1,6 +1,12 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
+import {
+  FIFTEEN_MINUTES,
+  THIRTY_DAYS,
+  TEMPLATES_DIR,
+  SMTP,
+} from '../constants/index.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
@@ -10,12 +16,6 @@ import { randomBytes } from 'crypto';
 
 import createHttpError from 'http-errors';
 
-import {
-  FIFTEEN_MINUTES,
-  THIRTY_DAYS,
-  TEMPLATES_DIR,
-  SMTP,
-} from '../constants/index.js';
 import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
 
@@ -97,7 +97,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
-export const requestResetToken = async (email) => {
+export const sendResetToken = async (email) => {
   const user = await UsersCollection.findOne({ email });
   if (!user) {
     throw createHttpError(404, 'User not found');

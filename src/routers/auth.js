@@ -6,6 +6,7 @@ import {
   loginUserSchema,
   sendResetEmailSchema,
 } from '../validation/auth.js';
+
 import {
   registerUserController,
   loginUserController,
@@ -13,6 +14,7 @@ import {
   refreshUserSessionController,
   sendResetEmailController,
 } from '../controllers/auth.js';
+
 import { authenticate } from '../middlewares/authenticate.js';
 
 import { resetPasswordSchema } from '../validation/auth.js';
