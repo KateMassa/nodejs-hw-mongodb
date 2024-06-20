@@ -97,22 +97,22 @@ export const deleteContactController = async (req, res, next) => {
   res.status(204).send();
 };
 
-// export const updateContactController = async (req, res, next) => {
-//   const authContactId = setAuthContactId(req);
+export const updateContactController = async (req, res, next) => {
+  const authContactId = setAuthContactId(req);
 
-//   const result = await updateContact(authContactId, req.body, {
-//     upsert: true,
-//   });
-//   if (!result) {
-//     next(createHttpError(404, 'Contact not found'));
-//     return;
-//   }
-//   res.status(200).json({
-//     status: 200,
-//     message: `Successfully upserted contact with id ${authContactId}!`,
-//     data: result.contact,
-//   });
-// };
+  const result = await updateContact(authContactId, req.body, {
+    upsert: true,
+  });
+  if (!result) {
+    next(createHttpError(404, 'Contact not found'));
+    return;
+  }
+  res.status(200).json({
+    status: 200,
+    message: `Successfully upserted contact with id ${authContactId}!`,
+    data: result.contact,
+  });
+};
 
 export const patchContactController = async (req, res, next) => {
   const photo = req.file;
