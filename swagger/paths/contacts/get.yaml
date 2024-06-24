@@ -2,7 +2,7 @@ tags:
   - Contacts
 summary: Get all contacts
 operationId: getContacts
-description: 'Get all contacts'
+description: Get all contacts
 security:
   - bearerAuth: []
 parameters:
@@ -31,7 +31,8 @@ parameters:
     required: false
   - in: query
     name: isFavourite
-    schema: type:boolean
+    schema:
+      type: boolean
     required: false
   - in: query
     name: type
@@ -41,7 +42,7 @@ parameters:
     required: false
 responses:
   '200':
-    description: 'Successfully found contacts'
+    description: Get all contacts
     content:
       application/json:
         schema:
@@ -59,36 +60,6 @@ responses:
               example: Successfully found contacts!
             data:
               type: object
-              required:
-                - data
-                - page
-                - perPage
-                - totalItems
-                - totalPages
-                - hasNextPage
-                - hasPreviousPage
-                properties:
-                data:
-                  type: array
-                  items:
-                    $ref: '../../components/schemas/contactInDB.yaml'
-                page:
-                  type: integer
-                  example: 1
-                perPage:
-                  type: integer
-                  example: 10
-                totalItems:
-                  type: integer
-                  example: 15
-                totalPages:
-                  type: integer
-                  example: 2
-                hasNextPage:
-                  type: boolean
-                  example: true
-                hasPreviousPage:
-                  type: boolean
-                  example: false
+              $ref: '../../components/schemas/contact.yaml'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: '../../components/responses/401.yaml'
