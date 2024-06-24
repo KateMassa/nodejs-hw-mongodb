@@ -14,13 +14,10 @@ tags:
   - name: Contacts
     description: Operations with contacts (adding, editing, deleting, viewing)
 servers:
-  # - url: http://localhost:3000
-  #   description: Development server
   - url: https://nodejs-hw-mongodb-aafz.onrender.com
-  description: Production server
 paths:
   /auth/register:
-    post: 
+    post:
       $ref: '../swagger/paths/auth/register.yaml'
   /auth/login:
     post:
@@ -41,20 +38,19 @@ paths:
     post:
       $ref: '../swagger/paths/contacts/post.yaml'
     get:
-      $ref: ../swagger/paths/contacts/get.yaml
+      $ref: '../swagger/paths/contacts/get.yaml'
   /contacts/{id}:
     get:
-      $ref: ../swagger/paths/contacts/{id}/get.yaml
+      $ref: ''../swagger/paths/contacts/{id}/get.yaml'
     patch:
-      $ref: ../swagger/paths/contacts/{id}/patch.yaml
+      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
     delete:
-      $ref: ../swagger/paths/contacts/{id}/delete.yaml
+      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
 components:
   schemas:
     Contact:
-      $ref: './swagger/components/schemas/contact.yaml'
-    User:
-      $ref: './swagger/components/schemas/user.yaml'
+      $ref: '../swagger/components/schemas/contact.yaml'
+
   securitySchemes:
     bearerAuth:
       type: http
